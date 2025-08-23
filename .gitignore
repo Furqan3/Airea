@@ -3,3 +3,5 @@ real_estate_clients.db
 frontend/.next
 frontend/out
 frontend/node_modules
+.qodo/
+

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -27,181 +29,127 @@
   font-display: swap;
 }
 
-
-/* Updated to use custom color palette */
+/* Modern 2025 Design System */
 :root {
-  --background: #201B26;
-  --foreground: #f9fafb;
-  --card: #2a2530;
-  --card-foreground: #f3f4f6;
-  --popover: #2a2530;
-  --popover-foreground: #f9fafb;
-  --primary: #F2A922;
-  --primary-foreground: #201B26;
-  --secondary: #F25D07;
-  --secondary-foreground: #ffffff;
-  --muted: #3a3540;
-  --muted-foreground: #A66E4E;
-  --accent: #F25D07;
-  --accent-foreground: #ffffff;
-  --destructive: #8c1d04;
-  --destructive-foreground: #ffffff;
-  --border: #d1d5db;
-  --input: #f8fafc;
-  --ring: rgba(242, 169, 34, 0.3);
-  --chart-1: #f2a922;
-  --chart-2: #f25d07;
-  --chart-3: #a66e4e;
-  --chart-4: #8c1d04;
-  --chart-5: #201b26;
-  --radius: 0.5rem;
-  --sidebar: #ffffff;
-  --sidebar-foreground: #201b26;
-  --sidebar-primary: #f2a922;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #f25d07;
-  --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: #d1d5db;
-  --sidebar-ring: rgba(242, 169, 34, 0.3);
+  /* Aurora UI Color Palette */
+  --primary: #6366F1;
+  --secondary: #EC4899;
+  --accent: #F59E0B;
+  --background: #0F0F23;
+  --surface: #1A1B3A;
+  --surface-light: #252659;
+  --text-primary: #F8FAFC;
+  --text-secondary: #CBD5E1;
+  --text-muted: #94A3B8;
+  --aurora-start: #8B5CF6;
+  --aurora-end: #06B6D4;
+  --aurora-pink: #EC4899;
+  --aurora-yellow: #F59E0B;
+  
+  /* Glass morphism */
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: rgba(0, 0, 0, 0.1);
+  
+  /* Spacing and sizing */
+  --radius: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-xl: 2rem;
+  
+  /* Typography */
+  --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  
+  /* Shadows */
+  --shadow-glow: 0 0 50px rgba(99, 102, 241, 0.3);
+  --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --shadow-floating: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
 html,
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+  background: var(--background);
+  color: var(--text-primary);
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 * {
   box-sizing: border-box;
 }
 
-/* Enhanced animations for modern feel */
-.fade-in {
-  animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.slide-up {
-  animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes slideUp {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-/* Modern gradient backgrounds */
-.gradient-bg {
-  background: linear-gradient(135deg, var(--background) 0%, var(--muted) 100%);
-}
-
-/* Updated gradient text to use new color palette */
-.gradient-text {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Enhanced chat animations */
-.chat-bubble {
-  animation: bubbleIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes bubbleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9) translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-/* Modern scrollbar styling */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: var(--muted);
-  border-radius: 3px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 3px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: var(--muted-foreground);
-}
-
-/* Modern button hover effects */
-.btn-hover {
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.btn-hover:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-}
-
-/* Adding welcome logo animations */
-@keyframes welcomeBounce {
-  0%,
-  20%,
-  50%,
-  80%,
-  100% {
-    transform: translateY(0) scale(1);
-  }
-  40% {
-    transform: translateY(-10px) scale(1.05);
-  }
-  60% {
-    transform: translateY(-5px) scale(1.02);
-  }
-}
-
-@keyframes welcomeGlow {
-  0%,
-  100% {
+/* Aurora Background Animation */
+@keyframes aurora {
+  0%, 100% {
+    transform: translateX(-50%) translateY(-50%) rotate(0deg) scale(1);
     opacity: 0.3;
-    transform: scale(1);
+  }
+  25% {
+    transform: translateX(-50%) translateY(-50%) rotate(90deg) scale(1.1);
+    opacity: 0.5;
   }
   50% {
+    transform: translateX(-50%) translateY(-50%) rotate(180deg) scale(0.9);
+    opacity: 0.4;
+  }
+  75% {
+    transform: translateX(-50%) translateY(-50%) rotate(270deg) scale(1.05);
     opacity: 0.6;
-    transform: scale(1.1);
   }
 }
 
-@keyframes slideInRight {
+@keyframes aurora-secondary {
+  0%, 100% {
+    transform: translateX(-50%) translateY(-50%) rotate(180deg) scale(0.8);
+    opacity: 0.2;
+  }
+  33% {
+    transform: translateX(-50%) translateY(-50%) rotate(270deg) scale(1.2);
+    opacity: 0.4;
+  }
+  66% {
+    transform: translateX(-50%) translateY(-50%) rotate(360deg) scale(0.9);
+    opacity: 0.3;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(99, 102, 241, 0.6);
+  }
+}
+
+@keyframes slide-in-up {
   from {
     opacity: 0;
-    transform: translateX(30px);
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
   }
   to {
     opacity: 1;
@@ -209,46 +157,279 @@ body {
   }
 }
 
-@keyframes fadeInDelay {
-  0% {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  50% {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes spinSlow {
+@keyframes scale-in {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
+    transform: scale(0.9);
   }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
-.animate-welcome-bounce {
-  animation: welcomeBounce 2s ease-in-out;
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
-.animate-welcome-glow {
-  animation: welcomeGlow 3s ease-in-out infinite;
+/* Utility Classes */
+.aurora-bg {
+  position: relative;
+  overflow: hidden;
 }
 
-.animate-slide-in-right {
-  animation: slideInRight 0.8s ease-out 0.3s both;
+.aurora-bg::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  height: 150%;
+  background: conic-gradient(from 0deg, var(--aurora-start), var(--aurora-pink), var(--aurora-yellow), var(--aurora-end), var(--aurora-start));
+  animation: aurora 20s linear infinite;
+  z-index: -2;
+  filter: blur(60px);
 }
 
-.animate-fade-in-delay {
-  animation: fadeInDelay 1.2s ease-out both;
+.aurora-bg::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120%;
+  height: 120%;
+  background: conic-gradient(from 180deg, var(--aurora-end), var(--aurora-start), var(--aurora-pink), var(--aurora-end));
+  animation: aurora-secondary 25s linear infinite reverse;
+  z-index: -1;
+  filter: blur(40px);
 }
 
-.animate-spin-slow {
-  animation: spinSlow 8s linear infinite;
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-glass);
+}
+
+.glass-card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card-hover:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 3s ease infinite;
+}
+
+.floating-element {
+  animation: float 6s ease-in-out infinite;
+}
+
+.glow-effect {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.animate-slide-up {
+  animation: slide-in-up 0.8s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.animate-slide-right {
+  animation: slide-in-right 0.8s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Modern Typography */
+.text-display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.text-heading {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.text-body {
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+/* Interactive Elements */
+.btn-modern {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-modern::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-modern:hover::before {
+  left: 100%;
+}
+
+.btn-modern:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-floating);
+}
+
+/* Scroll Animations */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, var(--primary), var(--secondary));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, var(--secondary), var(--accent));
+}
+
+/* Enhanced Chat Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(55, 65, 81, 0.3);
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #6366F1, #EC4899);
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #EC4899, #F59E0B);
+}
+
+/* Markdown Styles in Chat */
+.prose {
+  color: inherit;
+}
+
+.prose strong {
+  color: inherit;
+  font-weight: 600;
+}
+
+.prose em {
+  color: inherit;
+}
+
+.prose code {
+  background-color: rgba(55, 65, 81, 0.8);
+  color: #93C5FD;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
+
+.prose ul {
+  margin: 0.5rem 0;
+  padding-left: 1rem;
+}
+
+.prose li {
+  margin: 0.25rem 0;
+  color: inherit;
+}
+
+.prose a {
+  color: #60A5FA;
+  text-decoration: underline;
+}
+
+.prose a:hover {
+  color: #93C5FD;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .aurora-bg::before,
+  .aurora-bg::after {
+    width: 200%;
+    height: 200%;
+  }
+}
+
+/* Performance Optimizations */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+/* Legacy animations for compatibility */
+.fade-in {
+  animation: slide-in-up 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide-up {
+  animation: slide-in-up 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.chat-bubble {
+  animation: scale-in 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-hover {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-hover:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-floating);
 }
