@@ -31,24 +31,24 @@
 
 /* Modern 2025 Design System */
 :root {
-  /* Aurora UI Color Palette */
-  --primary: #6366F1;
-  --secondary: #EC4899;
-  --accent: #F59E0B;
-  --background: #0F0F23;
-  --surface: #1A1B3A;
-  --surface-light: #252659;
-  --text-primary: #F8FAFC;
-  --text-secondary: #CBD5E1;
-  --text-muted: #94A3B8;
-  --aurora-start: #8B5CF6;
-  --aurora-end: #06B6D4;
-  --aurora-pink: #EC4899;
-  --aurora-yellow: #F59E0B;
+  /* New Color Theme */
+  --primary: #53708B;
+  --secondary: #111827;
+  --accent: #88C9F7;
+  --background: #FFFFFF;
+  --surface: #E5E7EB;
+  --surface-light: #F3F4F6;
+  --text-primary: #000000;
+  --text-secondary: #111827;
+  --text-muted: #6B7280;
+  --aurora-start: #53708B;
+  --aurora-end: #88C9F7;
+  --aurora-pink: #53708B;
+  --aurora-yellow: #88C9F7;
   
-  /* Glass morphism */
-  --glass-bg: rgba(255, 255, 255, 0.05);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  /* Glass morphism - updated for light theme */
+  --glass-bg: rgba(229, 231, 235, 0.8);
+  --glass-border: rgba(17, 24, 39, 0.1);
   --glass-shadow: rgba(0, 0, 0, 0.1);
   
   /* Spacing and sizing */
@@ -61,7 +61,7 @@
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   
   /* Shadows */
-  --shadow-glow: 0 0 50px rgba(99, 102, 241, 0.3);
+  --shadow-glow: 0 0 50px rgba(83, 112, 139, 0.3);
   --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.1);
   --shadow-floating: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
@@ -210,8 +210,7 @@ body {
 }
 
 .glass-card {
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px);
+  background: var(--surface);
   border: 1px solid var(--glass-border);
   box-shadow: var(--shadow-glass);
 }
@@ -221,8 +220,8 @@ body {
 }
 
 .glass-card-hover:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.15);
+  background: var(--surface-light);
+  border-color: var(--primary);
   transform: translateY(-5px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }

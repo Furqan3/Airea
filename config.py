@@ -23,7 +23,7 @@ class Config:
         'mailjet_secret_key': os.getenv('MAILJET_SECRET_KEY'),
         'sender_email': os.getenv('SENDER_EMAIL', 'info@askairea.com'),
         'sender_name': os.getenv('SENDER_NAME', 'AIREA Real Estate'),
-        'agent_email': os.getenv('AGENT_EMAIL', 'agent@askairea.com')
+        'agent_email': os.getenv('AGENT_EMAIL', 'info@askairea.com')
     }
     
     # API Configuration

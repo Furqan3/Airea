@@ -47,33 +47,33 @@ interface ChatWidgetProps {
 const MarkdownRenderer: React.FC<{ content: string }> = ({ content }) => {
   const renderMarkdown = (text: string) => {
     // Handle bold text
-    text = text.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
+    text = text.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-black">$1</strong>')
     
     // Handle italic text
-    text = text.replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
+    text = text.replace(/\*(.*?)\*/g, '<em class="italic text-black">$1</em>')
     
     // Handle inline code
-    text = text.replace(/`(.*?)`/g, '<code class="bg-gray-700 px-2 py-1 rounded text-sm font-mono text-blue-300">$1</code>')
+    text = text.replace(/`(.*?)`/g, '<code class="bg-neutral-200 px-2 py-1 rounded text-sm font-mono text-primary-500">$1</code>')
     
     // Handle links
-    text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-400 hover:text-blue-300 underline" target="_blank" rel="noopener noreferrer">$1</a>')
+    text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-primary-500 hover:text-accent-400 underline" target="_blank" rel="noopener noreferrer">$1</a>')
     
     // Handle line breaks
     text = text.replace(/\n/g, '<br>')
     
     // Handle lists
-    text = text.replace(/^- (.+)$/gm, '<li class="ml-4 list-disc">$1</li>')
+    text = text.replace(/^- (.+)$/gm, '<li class="ml-4 list-disc text-black">$1</li>')
     text = text.replace(/(<li.*<\/li>)/s, '<ul class="space-y-1 my-2">$1</ul>')
     
     // Handle numbered lists
-    text = text.replace(/^\d+\. (.+)$/gm, '<li class="ml-4 list-decimal">$1</li>')
+    text = text.replace(/^\d+\. (.+)$/gm, '<li class="ml-4 list-decimal text-black">$1</li>')
     
     return text
   }
 
   return (
     <div 
-      className="prose prose-sm max-w-none text-gray-300 leading-relaxed"
+      className="prose prose-sm max-w-none text-black leading-relaxed"
       dangerouslySetInnerHTML={{ __html: renderMarkdown(content) }}
     />
   )
@@ -110,8 +110,8 @@ const MessageBubble: React.FC<{
         <div
           className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 shadow-lg ${
             message.sender === "user"
-              ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white"
-              : "bg-gradient-to-r from-gray-700 to-gray-800 text-gray-300 border border-gray-600"
+              ? "bg-primary-500 text-white"
+              : "bg-neutral-200 text-black border border-neutral-300"
           }`}
         >
           {message.sender === "user" ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
@@ -119,10 +119,10 @@ const MessageBubble: React.FC<{
 
         <div className="flex flex-col space-y-1">
           <div
-            className={`px-4 py-3 rounded-2xl shadow-lg backdrop-blur-sm ${
+            className={`px-4 py-3 rounded-2xl shadow-lg ${
               message.sender === "user"
-                ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-br-sm"
-                : "bg-gray-800/90 text-gray-100 rounded-bl-sm border border-gray-700"
+                ? "bg-primary-500 text-white rounded-br-sm"
+                : "bg-white text-black rounded-bl-sm border border-neutral-300"
             }`}
           >
             {message.sender === "assistant" ? (
@@ -133,7 +133,7 @@ const MessageBubble: React.FC<{
             
             <div className="flex items-center justify-between mt-2">
               <p className={`text-xs ${
-                message.sender === "user" ? "text-blue-100" : "text-gray-400"
+                message.sender === "user" ? "text-white/70" : "text-neutral-500"
               }`}>
                 {message.timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
               </p>
@@ -142,24 +142,24 @@ const MessageBubble: React.FC<{
                 <div className="flex items-center space-x-2 ml-3">
                   <button
                     onClick={handleCopy}
-                    className="p-1 hover:bg-gray-700 rounded transition-colors"
+                    className="p-1 hover:bg-neutral-200 rounded transition-colors"
                     title="Copy message"
                   >
-                    <Copy className="w-3 h-3 text-gray-400 hover:text-gray-300" />
+                    <Copy className="w-3 h-3 text-neutral-500 hover:text-black" />
                   </button>
                   <button
                     onClick={() => onFeedback?.(message.id, 'like')}
-                    className="p-1 hover:bg-gray-700 rounded transition-colors"
+                    className="p-1 hover:bg-neutral-200 rounded transition-colors"
                     title="Good response"
                   >
-                    <ThumbsUp className="w-3 h-3 text-gray-400 hover:text-green-400" />
+                    <ThumbsUp className="w-3 h-3 text-neutral-500 hover:text-green-500" />
                   </button>
                   <button
                     onClick={() => onFeedback?.(message.id, 'dislike')}
-                    className="p-1 hover:bg-gray-700 rounded transition-colors"
+                    className="p-1 hover:bg-neutral-200 rounded transition-colors"
                     title="Poor response"
                   >
-                    <ThumbsDown className="w-3 h-3 text-gray-400 hover:text-red-400" />
+                    <ThumbsDown className="w-3 h-3 text-neutral-500 hover:text-red-500" />
                   </button>
                 </div>
               )}
@@ -167,7 +167,7 @@ const MessageBubble: React.FC<{
           </div>
           
           {copied && (
-            <div className="text-xs text-green-400 animate-in fade-in-50">
+            <div className="text-xs text-green-500 animate-in fade-in-50">
               Copied to clipboard!
             </div>
           )}
@@ -318,7 +318,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({
         // Show success message
         const successMessage: Message = {
           id: (Date.now() + 2).toString(),
-          content: `✅ **Great!** I've captured your information successfully.\n\n**${data.clients_processed} lead(s)** have been processed and our team will be in touch with you shortly!\n\n*Thank you for choosing AIREA!* 🎉`,
+          content: `✅ **Thank you!** Our agent will contact you shortly to discuss your real estate needs.\n\n*Thank you for choosing AIREA!* 🎉`,
           sender: "assistant",
           timestamp: new Date(),
         }
@@ -398,12 +398,12 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({
         const displayValue = field.format ? field.format(value) : String(value)
         
         return (
-          <div key={field.key} className="flex items-center justify-between py-2 px-3 bg-gray-800/50 rounded-lg border border-gray-700">
+          <div key={field.key} className="flex items-center justify-between py-2 px-3 bg-neutral-100 rounded-lg border border-neutral-200">
             <div className="flex items-center space-x-2">
               <span className="text-sm">{field.icon}</span>
-              <span className="text-gray-300 text-sm font-medium">{field.label}:</span>
+              <span className="text-black text-sm font-medium">{field.label}:</span>
             </div>
-            <span className="text-white text-sm font-semibold">{displayValue}</span>
+            <span className="text-black text-sm font-semibold">{displayValue}</span>
           </div>
         )
       })
@@ -414,18 +414,15 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-end p-4 pointer-events-none">
       <div
-        className={`bg-gray-900/95 backdrop-blur-xl border border-gray-700 rounded-2xl shadow-2xl pointer-events-auto transition-all duration-300 ${
+        className={`bg-white border border-neutral-300 rounded-2xl shadow-2xl pointer-events-auto transition-all duration-300 ${
           isMinimized ? "w-80 h-16" : "w-96 h-[600px]"
         }`}
-        style={{
-          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05)',
-        }}
       >
         {/* Enhanced Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-700 bg-gradient-to-r from-blue-600/90 to-purple-600/90 backdrop-blur-sm text-white rounded-t-2xl">
+        <div className="flex items-center justify-between p-4 border-b border-neutral-300 bg-primary-500 text-white rounded-t-2xl">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm border border-white/30 shadow-lg">
-              <Bot className="w-5 h-5" />
+            <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg">
+              <Bot className="w-5 h-5 text-primary-500" />
             </div>
             <div>
               <h3 className="font-bold text-white">AIREA Assistant</h3>
@@ -435,7 +432,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({
                     processingData ? "bg-yellow-400 animate-pulse" : 
                     conversationComplete ? "bg-green-400" : "bg-green-400 animate-pulse"
                   }`}></div>
-                  <p className="text-xs text-blue-100">
+                  <p className="text-xs text-white">
                     {processingData ? "Processing your information..." :
                      conversationComplete ? "Lead captured successfully!" : 
                      "Online • Ready to help"}
@@ -464,7 +461,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({
         {!isMinimized && (
           <>
             {/* Enhanced Messages Area */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 h-96 bg-gradient-to-b from-gray-900/50 to-gray-900 custom-scrollbar">
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 h-96 bg-neutral-50 custom-scrollbar">
               {messages.map((message) => (
                 <MessageBubble
                   key={message.id}
@@ -477,14 +474,14 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({
               {(isLoading || processingData) && (
                 <div className="flex justify-start animate-in fade-in-50">
                   <div className="flex items-end space-x-3">
-                    <div className="w-8 h-8 bg-gradient-to-r from-gray-700 to-gray-800 rounded-full flex items-center justify-center border border-gray-600 shadow-lg">
-                      <Bot className="w-4 h-4 text-gray-300" />
+                    <div className="w-8 h-8 bg-neutral-200 rounded-full flex items-center justify-center border border-neutral-300 shadow-lg">
+                      <Bot className="w-4 h-4 text-black" />
                     </div>
-                    <div className="bg-gray-800/90 px-4 py-3 rounded-2xl rounded-bl-sm border border-gray-700 shadow-lg backdrop-blur-sm">
+                    <div className="bg-white px-4 py-3 rounded-2xl rounded-bl-sm border border-neutral-300 shadow-lg">
                       <div className="flex space-x-1">
-                        <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
-                        <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                        <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                        <div className="w-2 h-2 bg-primary-500 rounded-full animate-bounce"></div>
+                        <div className="w-2 h-2 bg-accent-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                        <div className="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                       </div>
                     </div>
                   </div>
@@ -496,19 +493,19 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({
 
             {/* Enhanced Client Data Summary */}
             {extractedClients.length > 0 && (
-              <div className="border-t border-gray-700 p-4 bg-gray-800/50 backdrop-blur-sm">
+              <div className="border-t border-neutral-300 p-4 bg-neutral-100">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center space-x-2">
-                    <Sparkles className="w-4 h-4 text-blue-400" />
-                    <h4 className="font-semibold text-white text-sm">Lead Information</h4>
+                    <Sparkles className="w-4 h-4 text-primary-500" />
+                    <h4 className="font-semibold text-black text-sm">Lead Information</h4>
                   </div>
                   {conversationComplete ? (
-                    <div className="flex items-center space-x-1 px-3 py-1 bg-green-500/20 text-green-400 text-xs rounded-full border border-green-500/30">
+                    <div className="flex items-center space-x-1 px-3 py-1 bg-green-100 text-green-600 text-xs rounded-full border border-green-200">
                       <CheckCircle2 className="w-3 h-3" />
                       <span className="font-medium">Complete</span>
                     </div>
                   ) : (
-                    <div className="flex items-center space-x-1 px-3 py-1 bg-blue-500/20 text-blue-400 text-xs rounded-full border border-blue-500/30">
+                    <div className="flex items-center space-x-1 px-3 py-1 bg-blue-100 text-primary-500 text-xs rounded-full border border-blue-200">
                       <Clock className="w-3 h-3" />
                       <span className="font-medium">In Progress</span>
                     </div>
@@ -521,7 +518,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({
             )}
 
             {/* Enhanced Input Area */}
-            <div className="border-t border-gray-700 p-4 bg-gray-800/30 backdrop-blur-sm rounded-b-2xl">
+            <div className="border-t border-neutral-300 p-4 bg-white rounded-b-2xl">
               <div className="flex items-center space-x-3">
                 <div className="flex-1 relative">
                   <input
@@ -531,14 +528,14 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={handleKeyDown}
                     placeholder="Type your message..."
-                    className="w-full px-4 py-3 pr-12 border border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-800/50 text-white placeholder-gray-400 backdrop-blur-sm"
+                    className="w-full px-4 py-3 pr-12 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white text-black placeholder-neutral-400"
                     disabled={isLoading || processingData}
                   />
                   <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
                     <button
                       onClick={sendMessage}
                       disabled={isLoading || processingData || !inputValue.trim()}
-                      className="p-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105"
+                      className="p-2 bg-primary-500 text-white rounded-lg hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105"
                     >
                       <Send className="w-4 h-4" />
                     </button>
@@ -551,7 +548,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({
                 {conversationComplete ? (
                   <button
                     onClick={resetConversation}
-                    className="text-sm text-blue-400 hover:text-blue-300 transition-colors font-medium flex items-center space-x-1"
+                    className="text-sm text-primary-500 hover:text-accent-400 transition-colors font-medium flex items-center space-x-1"
                   >
                     <MessageCircle className="w-4 h-4" />
                     <span>Start New Conversation</span>
@@ -561,7 +558,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({
                     <button
                       onClick={manualProcessConversation}
                       disabled={processingData}
-                      className="text-sm text-green-400 hover:text-green-300 transition-colors font-medium flex items-center space-x-1 disabled:opacity-50"
+                      className="text-sm text-green-500 hover:text-green-600 transition-colors font-medium flex items-center space-x-1 disabled:opacity-50"
                     >
                       <Sparkles className="w-4 h-4" />
                       <span>{processingData ? "Processing..." : "Process Lead Info"}</span>
@@ -571,8 +568,8 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({
               </div>
 
               <div className="mt-2 text-center">
-                <p className="text-xs text-gray-500">
-                  Powered by AIREA AI • Press Enter to send • Supports **markdown**
+                <p className="text-xs text-neutral-500">
+                  Powered by AIREA AI • Press Enter to send • 
                 </p>
               </div>
             </div>
