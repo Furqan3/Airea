@@ -2,6 +2,7 @@
 
 import re
 from typing import Dict, Any
+from datetime import datetime
 from mailjet_rest import Client as MailjetClient
 from models import Client
 
@@ -26,9 +27,9 @@ class MailjetEmailService:
         return self.client is not None
     
     def send_email(self, to_email: str, to_name: str, subject: str, html_content: str, text_content: str = "") -> bool:
-        """Send an email using Mailjet API."""
+        """Send an email using Mailjet API with detailed logging."""
         if not self.client:
-            print("Error: Mailjet client not initialized")
+            print("❌ Error: Mailjet client not initialized")
             return False
         
         try:
@@ -52,17 +53,56 @@ class MailjetEmailService:
                 ]
             }
             
+            # Print detailed email data before sending
+            print("\n" + "="*70)
+            print("📧 SENDING EMAIL")
+            print("="*70)
+            print(f"📤 FROM: {self.config['sender_name']} <{self.config['sender_email']}>")
+            print(f"📥 TO: {to_name} <{to_email}>")
+            print(f"📋 SUBJECT: {subject}")
+            print(f"📄 HTML LENGTH: {len(html_content)} characters")
+            print(f"📝 TEXT LENGTH: {len(text_content or self._html_to_text(html_content))} characters")
+            print(f"⏰ TIMESTAMP: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+            print("-" * 70)
+            print("📄 TEXT CONTENT PREVIEW:")
+            preview_text = (text_content or self._html_to_text(html_content))[:300]
+            print(f"{preview_text}{'...' if len(preview_text) >= 300 else ''}")
+            print("-" * 70)
+            print("📊 EMAIL DATA STRUCTURE:")
+            print(f"   - Messages Count: {len(data['Messages'])}")
+            print(f"   - From Email: {data['Messages'][0]['From']['Email']}")
+            print(f"   - From Name: {data['Messages'][0]['From']['Name']}")
+            print(f"   - To Email: {data['Messages'][0]['To'][0]['Email']}")
+            print(f"   - To Name: {data['Messages'][0]['To'][0]['Name']}")
+            print(f"   - Subject: {data['Messages'][0]['Subject']}")
+            print(f"   - Has HTML: {'Yes' if data['Messages'][0]['HTMLPart'] else 'No'}")
+            print(f"   - Has Text: {'Yes' if data['Messages'][0]['TextPart'] else 'No'}")
+            print("="*70)
+            
             result = self.client.send.create(data=data)
             
             if result.status_code == 200:
-                print(f"Email sent successfully to {to_email}")
+                print(f"✅ EMAIL SENT SUCCESSFULLY!")
+                print(f"📊 Mailjet Response: {result.json()}")
+                response_data = result.json()
+                if 'Messages' in response_data and response_data['Messages']:
+                    message_info = response_data['Messages'][0]
+                    print(f"📧 Message ID: {message_info.get('To', [{}])[0].get('MessageID', 'N/A')}")
+                    print(f"📧 Message UUID: {message_info.get('To', [{}])[0].get('MessageUUID', 'N/A')}")
+                    print(f"📧 Message Href: {message_info.get('To', [{}])[0].get('MessageHref', 'N/A')}")
+                print("="*70 + "\n")
                 return True
             else:
-                print(f"Failed to send email. Status: {result.status_code}, Response: {result.json()}")
+                print(f"❌ FAILED TO SEND EMAIL!")
+                print(f"📊 Status Code: {result.status_code}")
+                print(f"📊 Response: {result.json()}")
+                print("="*70 + "\n")
                 return False
                 
         except Exception as e:
-            print(f"Error sending email: {e}")
+            print(f"❌ EXCEPTION WHILE SENDING EMAIL: {e}")
+            print(f"📊 Exception Type: {type(e).__name__}")
+            print("="*70 + "\n")
             return False
     
     def _html_to_text(self, html_content: str) -> str:
@@ -77,6 +117,7 @@ class MailjetEmailService:
     
     def send_welcome_email(self, client_data: Client) -> bool:
         """Send welcome email to new client."""
+        print(f"\n🎯 PREPARING WELCOME EMAIL for {client_data.name}")
         subject = "Welcome to AIREA Real Estate"
         
         html_content = f"""
@@ -158,6 +199,8 @@ AIREA Real Estate Team
     
     def send_property_details_email(self, client_data: Client) -> bool:
         """Send property details/appointment confirmation email."""
+        print(f"\n🏠 PREPARING PROPERTY DETAILS EMAIL for {client_data.name}")
+        
         if client_data.appointment and client_data.appointment_time:
             subject = "Appointment Confirmation - AIREA Real Estate"
             appointment_section = f"""
@@ -229,6 +272,8 @@ AIREA Real Estate Team
     
     def send_agent_notification(self, client_data: Client, is_new_client: bool) -> bool:
         """Send notification to the agent about new lead/appointment."""
+        print(f"\n🚨 PREPARING AGENT NOTIFICATION for {client_data.name} ({'NEW' if is_new_client else 'EXISTING'} client)")
+        
         subject = f"{'New Client Lead' if is_new_client else 'Client Update'} - {client_data.name}"
         
         html_content = f"""
@@ -294,3 +339,67 @@ AIREA Real Estate Team
         """
         
         return self.send_email(self.config['agent_email'], "AIREA Agent", subject, html_content)
+    
+    def send_manual_lead_processing_email(self, client_data: Client, is_new_client: bool, processing_method: str = "Manual") -> dict:
+        """Send all emails for a manually processed lead and return detailed results."""
+        print(f"\n🔧 MANUAL LEAD PROCESSING INITIATED for {client_data.name}")
+        print(f"📊 Processing Method: {processing_method}")
+        print(f"👤 Client Type: {'NEW' if is_new_client else 'EXISTING'}")
+        
+        results = {
+            "client_name": client_data.name,
+            "client_email": client_data.email,
+            "is_new_client": is_new_client,
+            "processing_method": processing_method,
+            "timestamp": datetime.now().isoformat(),
+            "emails_sent": {
+                "welcome_email": False,
+                "property_details_email": False,
+                "agent_notification": False
+            },
+            "errors": []
+        }
+        
+        try:
+            # Send welcome email for new clients
+            if is_new_client:
+                print(f"📧 Sending welcome email to new client...")
+                results["emails_sent"]["welcome_email"] = self.send_welcome_email(client_data)
+                if not results["emails_sent"]["welcome_email"]:
+                    results["errors"].append("Failed to send welcome email")
+            
+            # Send property details email
+            print(f"📧 Sending property details email...")
+            results["emails_sent"]["property_details_email"] = self.send_property_details_email(client_data)
+            if not results["emails_sent"]["property_details_email"]:
+                results["errors"].append("Failed to send property details email")
+            
+            # Send agent notification
+            print(f"📧 Sending agent notification...")
+            results["emails_sent"]["agent_notification"] = self.send_agent_notification(client_data, is_new_client)
+            if not results["emails_sent"]["agent_notification"]:
+                results["errors"].append("Failed to send agent notification")
+            
+            # Summary
+            total_sent = sum(results["emails_sent"].values())
+            total_attempted = len([k for k, v in results["emails_sent"].items() if k != "welcome_email" or is_new_client])
+            
+            print(f"\n📊 MANUAL PROCESSING SUMMARY:")
+            print(f"   ✅ Emails Sent: {total_sent}/{total_attempted}")
+            print(f"   ❌ Errors: {len(results['errors'])}")
+            if results["errors"]:
+                for error in results["errors"]:
+                    print(f"      - {error}")
+            print("="*70)
+            
+            results["success"] = len(results["errors"]) == 0
+            results["total_emails_sent"] = total_sent
+            results["total_emails_attempted"] = total_attempted
+            
+        except Exception as e:
+            error_msg = f"Exception during manual processing: {e}"
+            print(f"❌ {error_msg}")
+            results["errors"].append(error_msg)
+            results["success"] = False
+        
+        return results
