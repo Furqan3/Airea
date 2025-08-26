@@ -180,7 +180,7 @@ const MessageBubble: React.FC<{
 const ChatWidget: React.FC<ChatWidgetProps> = ({ 
   isOpen, 
   onClose, 
-  apiBaseUrl = "http://localhost:8000" 
+  apiBaseUrl = "https://askairea.com" 
 }) => {
   const [messages, setMessages] = useState<Message[]>([])
   const [inputValue, setInputValue] = useState("")
